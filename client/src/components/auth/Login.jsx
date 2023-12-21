@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import axios from "axios";
+import CircularLoading from "../reusable/CircularLoading";
 
 const BASE_URL = process.env.REACT_APP_BASE_URL;
 
@@ -12,6 +13,7 @@ const Login = () => {
     password: "",
   });
   const [btnClicked, setBtnClicked] = useState(false);
+  const [isData, setIsData] = useState(false);
 
   const setValue = (e) => {
     const { name, value } = e.target;
@@ -47,7 +49,7 @@ const Login = () => {
         // toast.success(response.data.message);
       } else {
         toast.warning(response.data.message);
-      } 
+      }
     }
     setBtnClicked(false);
   };
@@ -67,8 +69,12 @@ const Login = () => {
         if (response.data.status === 201) {
           navigate("/home");
           // toast.success(response.data.message);
+        } else {
+          setIsData(true);
         }
       } catch (error) {}
+    } else {
+      setIsData(true);
     }
   };
 
@@ -77,57 +83,63 @@ const Login = () => {
   }, []);
 
   return (
-    <div className="container my-5">
-      <div className="row justify-content-center">
-        <div className="col-md-6 border rounded-2 shadow p-4">
-          <h2 className="text-center">Sign In</h2>
-          <form>
-            <div className="form-group my-4">
-              <label htmlFor="email">Email</label>
-              <input
-                type="email"
-                className="form-control"
-                name="email"
-                onChange={setValue}
-                value={user.email}
-                id="email"
-                placeholder="Enter your email"
-              />
+    <>
+      {isData ? (
+        <div className="container my-5">
+          <div className="row justify-content-center">
+            <div className="col-md-6 border rounded-2 shadow p-4">
+              <h2 className="text-center">Sign In</h2>
+              <form>
+                <div className="form-group my-4">
+                  <label htmlFor="email">Email</label>
+                  <input
+                    type="email"
+                    className="form-control"
+                    name="email"
+                    onChange={setValue}
+                    value={user.email}
+                    id="email"
+                    placeholder="Enter your email"
+                  />
+                </div>
+                <div className="form-group my-4">
+                  <label htmlFor="password">Password</label>
+                  <input
+                    type="password"
+                    className="form-control"
+                    name="password"
+                    onChange={setValue}
+                    value={user.password}
+                    id="password"
+                    placeholder="Enter your Password"
+                  />
+                </div>
+                <div className="text-center">
+                  <button
+                    type="submit"
+                    className="btn btn-primary text-align-center px-4"
+                    onClick={handleLogin}
+                    disabled={btnClicked}
+                  >
+                    {!btnClicked ? "Login" : "Logging in..."}
+                  </button>
+                </div>
+              </form>
+              <div className="text-center my-3">
+                <p className="">
+                  Don't have an account?{" "}
+                  <span>
+                    <Link to="/register">Register</Link>
+                  </span>
+                </p>
+              </div>
             </div>
-            <div className="form-group my-4">
-              <label htmlFor="password">Password</label>
-              <input
-                type="password"
-                className="form-control"
-                name="password"
-                onChange={setValue}
-                value={user.password}
-                id="password"
-                placeholder="Enter your Password"
-              />
-            </div>
-            <div className="text-center">
-              <button
-                type="submit"
-                className="btn btn-primary text-align-center px-4"
-                onClick={handleLogin}
-                disabled={btnClicked}
-              >
-                {!btnClicked?"Login":"Logging in..."}
-              </button>
-            </div>
-          </form>
-          <div className="text-center my-3">
-            <p className="">
-              Don't have an account?{" "}
-              <span>
-                <Link to="/register">Register</Link>
-              </span>
-            </p>
           </div>
         </div>
-      </div>
-    </div>
+      ) : (
+        <CircularLoading />
+      )}
+    </>
   );
 };
 

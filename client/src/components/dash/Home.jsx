@@ -40,6 +40,16 @@ const Home = () => {
             Talk Bot
           </NavLink>
         </li>
+        <li className="nav-item">
+          <NavLink
+            to="/home/bmi"
+            className="nav-link"
+            activeClassName="active"
+            onClick={toggle}
+          >
+            BMI Calculator
+          </NavLink>
+        </li>
       </ul>
     </div>
   );
@@ -47,7 +57,7 @@ const Home = () => {
   const Sidebar = () => (
     <div
       className={`d-flex flex-column bg-light border-right custom-style ${
-        isOpen ? "" : "d-none d-lg-flex"
+        isOpen ? "" : "d-none d-md-flex"
       }`}
       style={{ width: "250px" }}
     >
@@ -97,7 +107,7 @@ const Home = () => {
           <div className="d-flex">
             <div>
               <button
-                className="btn btn-primary d-lg-none"
+                className="btn btn-primary d-md-none"
                 type="button"
                 onClick={toggle}
               >

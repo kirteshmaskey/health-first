@@ -7,6 +7,7 @@ import Navbar from "./components/Navbar";
 import PageNotFound from "./components/reusable/PageNotFound";
 import Talk from "./components/dash/Talk";
 import AddMedicine from "./components/dash/AddMedicine";
+import BMICalculator from "./components/dash/BMICalculator";
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
         <Route path="/home" element={<Home />} >
           <Route path="talk" element={<Talk />} />
           <Route path="add-medicine" element={<AddMedicine />} />
+          <Route path="bmi" element={<BMICalculator />} />
         </Route>
         <Route path="*" element={<PageNotFound />} />
       </Routes>

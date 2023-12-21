@@ -43,8 +43,8 @@ const Talk = () => {
     let input = document.getElementById("input").value;
     document.getElementById("result").innerText = "";
     let result = document.getElementById("result");
-    
-    if(input) {
+
+    if (input) {
       const data = await axios.post(
         `${BASE_URL}/api/dash/talk`,
         { input },
@@ -53,11 +53,11 @@ const Talk = () => {
             "Content-Type": "application/json",
           },
         }
-        );
-        const res = await data;
-        
-        result.innerText = res.data.message;
-    }else {
+      );
+      const res = await data;
+
+      result.innerText = res.data.message;
+    } else {
       toast.info("Please ask question");
     }
     setIsBtnClicked(false);
@@ -80,7 +80,7 @@ const Talk = () => {
 
   return (
     <div className="container p-lg-5">
-      <h1 className="mb-5 text-center">Talk to your personalized doctor</h1>
+      <h1 className="mb-5 text-center text-primary">Talk to your personalized doctor</h1>
       <div class="alert alert-info" role="alert">
         While you can obtain information from this chatbot, it's always
         recommended to consult with your doctor for medical advice.
@@ -114,7 +114,7 @@ const Talk = () => {
           disabled={isBtnClicked}
           className="btn btn-primary mt-3 d-block mx-auto"
         >
-          {isBtnClicked?"Waiting...":"Ask"}
+          {isBtnClicked ? "Waiting..." : "Ask"}
         </button>
       </form>
       <textarea
@@ -124,14 +124,15 @@ const Talk = () => {
         rows="4"
       />
       <br />
-      <button onClick={listen} className="btn btn-primary" disabled={isSpeaking}>
+      <button
+        onClick={listen}
+        className="btn btn-primary"
+        disabled={isSpeaking}
+      >
         {isSpeaking ? "Listening..." : "Listen"}
       </button>{" "}
       {"   "}
-      <button
-        onClick={stopSpeaking}
-        className="btn btn-danger"
-      >
+      <button onClick={stopSpeaking} className="btn btn-danger">
         Stop listning
       </button>
     </div>

@@ -1,6 +1,6 @@
 const AddMedicine = () => {
   return (
-    <h1>Hello Add Medincine</h1>
+    <h1>Hello Add Medicine</h1>
   )
 };
 

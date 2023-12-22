@@ -9,7 +9,7 @@ const genAI = new GoogleGenerativeAI(process.env.BARD_API_KEY);
 
 const talk = async (req, res) => {
   const {input} = req.body;
-  const modifiedPrompt = input + " Please summarize your response in no more than 150 words. Respond as if you are an expert doctor.";
+  const modifiedPrompt = input + " Please summarize your response in no more than 150 words. Respond as if you are an expert doctor or health care specalist. If you feel that the question is not related to health and medicine then do not answer to the question and ask the to ask medical related problem";
   // console.log(input);
 
   const generationConfig = {

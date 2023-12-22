@@ -16,39 +16,13 @@ const Navbar = () => {
   };
 
   return (
-    // <nav
-    //   className="navbar navbar-expand-sm rounded shadow mb-2"
-    //   style={{ backgroundColor: "#e0e0eb" }}
-    // >
-    //   <div className="container-fluid ps-4">
-    //     <span className="navbar-brand text-decoration-none">
-    //       <Link to="/" className="text-decoration-none fs-3">
-    //         Health First
-    //       </Link>
-    //     </span>
-    //     {loggedIn ? (
-    //       <>
-    //           <div className="d-sm-flex justify-content-between w-100">
-    //             <button
-    //               onClick={handleLogout}
-    //               className="btn btn-danger px-3 py-1"
-    //             >
-    //               Logout
-    //             </button>
-    //           </div>
-    //       </>
-    //     ) : (
-    //       <></>
-    //     )}
-    //   </div>
-    // </nav>
     <nav
       className="navbar navbar-expand-sm rounded mb-2"
       style={{ backgroundColor: "#e0e0eb" }}
     >
       <div className="container-fluid ps-4 d-flex justify-content-between">
         <span className="navbar-brand text-decoration-none">
-          <Link to="/" className="text-decoration-none fs-3">
+          <Link to={loggedIn ? "/home" : "/"} className="text-decoration-none fs-3">
             Health First
           </Link>
         </span>

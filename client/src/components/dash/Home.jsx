@@ -16,40 +16,29 @@ const Home = () => {
 
   const navigate = useNavigate();
 
+  const navItems = [
+    { to: "/home/add-medicine", name: "Add Medicine" },
+    { to: "/home/diet-and-tips", name: "Diet and Tips" },
+    { to: "/home/talk", name: "Talk Bot" },
+    { to: "/home/bmi", name: "BMI Calculator" },
+  ];
+
   const SidebarContent = () => (
     <div className="p-4">
       <h5>{loginUser.fname + " " + loginUser.lname}</h5>
       <ul className="nav nav-pills flex-column mt-2">
-        <li className="nav-item">
-          <NavLink
-            to="/home/add-medicine"
-            className="nav-link"
-            activeClassName="active"
-            onClick={toggle}
-          >
-            Add Medicine
-          </NavLink>
-        </li>
-        <li className="nav-item">
-          <NavLink
-            to="/home/talk"
-            className="nav-link"
-            activeClassName="active"
-            onClick={toggle}
-          >
-            Talk Bot
-          </NavLink>
-        </li>
-        <li className="nav-item">
-          <NavLink
-            to="/home/bmi"
-            className="nav-link"
-            activeClassName="active"
-            onClick={toggle}
-          >
-            BMI Calculator
-          </NavLink>
-        </li>
+        {navItems.map((item, index) => (
+          <li key={index} className="nav-item">
+            <NavLink
+              to={item.to}
+              className="nav-link"
+              activeClassName="active"
+              onClick={toggle}
+            >
+              {item.name}
+            </NavLink>
+          </li>
+        ))}
       </ul>
     </div>
   );
@@ -116,7 +105,7 @@ const Home = () => {
 
               <Sidebar />
             </div>
-            <div className="flex-grow-1">
+            <div className="flex-grow-1 px-lg-5">
               <Outlet />
             </div>
           </div>

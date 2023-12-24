@@ -1,11 +1,15 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import axios from "axios";
 import mic from "../asset/images/mic.webp";
 import { toast } from "react-toastify";
+import { UserContext } from "../contextprovider/UserContext";
+import CircularLoading from "../reusable/CircularLoading";
 
 const BASE_URL = process.env.REACT_APP_BASE_URL;
 
 const Talk = () => {
+  const { LoginStatus } = useContext(UserContext);
+  const { loggedIn, setLoggedIn } = LoginStatus;
   const [input, setInput] = useState({
     userInput: "",
   });
@@ -45,17 +49,19 @@ const Talk = () => {
     let result = document.getElementById("result");
 
     if (input) {
+      const token = localStorage.getItem("usertoken");
       const data = await axios.post(
         `${BASE_URL}/api/dash/talk`,
         { input },
         {
           headers: {
             "Content-Type": "application/json",
+            usertoken: token,
           },
         }
       );
       const res = await data;
-        // console.log(res.data.message);
+      // console.log(res.data.message);
       result.value = res.data.message;
     } else {
       toast.info("Please ask question");
@@ -79,69 +85,75 @@ const Talk = () => {
   };
 
   return (
-    <div className="container">
-      <h2 className="my-4 text-center text-primary">
-        Talk to your personalized doctor
-      </h2>
-      <div class="alert alert-info" role="alert">
-        While you can obtain information from this chatbot, it's always
-        recommended to consult with your doctor for medical advice.
-      </div>
-      <div className="card">
-        <div className="card-body">
-          <form className="mb-4">
-            <div className="input-group">
-              <input
-                type="text"
-                id="input"
-                onChange={setVal}
-                placeholder="Enter text or use voice command"
-                className="form-control"
-              />
-              <div className="input-group-append">
+    <>
+      {loggedIn ? (
+        <div className="container">
+          <h2 className="my-4 text-center text-primary">
+            Talk to your personalized doctor
+          </h2>
+          <div className="alert alert-info" role="alert">
+            While you can obtain information from this chatbot, it's always
+            recommended to consult with your doctor for medical advice.
+          </div>
+          <div className="card">
+            <div className="card-body">
+              <form className="mb-4">
+                <div className="input-group">
+                  <input
+                    type="text"
+                    id="input"
+                    onChange={setVal}
+                    placeholder="Enter text or use voice command"
+                    className="form-control"
+                  />
+                  <div className="input-group-append">
+                    <button
+                      type="button"
+                      onClick={speak}
+                      className="btn btn-outline-secondary"
+                    >
+                      <img
+                        src={mic}
+                        alt={"mic"}
+                        style={{ height: "22px", width: "13px" }}
+                      />{" "}
+                    </button>
+                  </div>
+                </div>
                 <button
-                  type="button"
-                  onClick={speak}
-                  className="btn btn-outline-secondary"
+                  type="submit"
+                  onClick={submit}
+                  disabled={isBtnClicked}
+                  className="btn btn-primary mt-3 d-block mx-auto"
                 >
-                  <img
-                    src={mic}
-                    alt={"mic"}
-                    style={{ height: "22px", width: "13px" }}
-                  />{" "}
+                  {isBtnClicked ? "Waiting..." : "Ask"}
                 </button>
-              </div>
+              </form>
+              <textarea
+                id="result"
+                placeholder="Response..."
+                className="form-control"
+                rows="15"
+              />
+              <br />
+              <button
+                onClick={listen}
+                className="btn btn-primary"
+                disabled={isSpeaking}
+              >
+                {isSpeaking ? "Listening..." : "Listen"}
+              </button>{" "}
+              {"   "}
+              <button onClick={stopSpeaking} className="btn btn-danger">
+                Stop listening
+              </button>
             </div>
-            <button
-              type="submit"
-              onClick={submit}
-              disabled={isBtnClicked}
-              className="btn btn-primary mt-3 d-block mx-auto"
-            >
-              {isBtnClicked ? "Waiting..." : "Ask"}
-            </button>
-          </form>
-          <textarea
-            id="result"
-            placeholder="Response..."
-            className="form-control"
-            rows="4"
-          />
-          <br />
-          <button
-            onClick={listen}
-            className="btn btn-primary"
-            disabled={isSpeaking}
-          >
-            {isSpeaking ? "Listening..." : "Listen"}
-          </button>{" "}
-          {"   "}
-          <button onClick={stopSpeaking} className="btn btn-danger">
-            Stop listening
-          </button>
+          </div>
         </div>
-      </div>
-    </div>
+      ) : (
+        <CircularLoading />
+      )}
+    </>
   );
 };
 

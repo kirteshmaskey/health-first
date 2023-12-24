@@ -2,8 +2,9 @@ import { useContext, useEffect, useState } from "react";
 import { UserContext } from "../contextprovider/UserContext";
 import { toast } from "react-toastify";
 import axios from "axios";
-import { Link, NavLink, Outlet, useNavigate } from "react-router-dom";
+import { NavLink, Outlet, useNavigate } from "react-router-dom";
 import CircularLoading from "../reusable/CircularLoading";
+import Appointments from "./Appointments";
 
 const BASE_URL = process.env.REACT_APP_BASE_URL;
 
@@ -17,7 +18,7 @@ const Home = () => {
   const navigate = useNavigate();
 
   const navItems = [
-    { to: "/home/add-medicine", name: "Add Medicine" },
+    { to: "/home/schedule-appointment", name: "Schedule Appointment" },
     { to: "/home/diet-and-tips", name: "Diet and Tips" },
     { to: "/home/talk", name: "Talk Bot" },
     { to: "/home/bmi", name: "BMI Calculator" },
@@ -105,8 +106,13 @@ const Home = () => {
 
               <Sidebar />
             </div>
+
             <div className="flex-grow-1 px-lg-5">
-              <Outlet />
+              {window.location.pathname === "/home" ? (
+                <Appointments />
+              ) : (
+                <Outlet />
+              )}
             </div>
           </div>
         </>

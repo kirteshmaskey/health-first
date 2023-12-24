@@ -91,7 +91,9 @@ const Login = () => {
               <h2 className="text-center">Sign In</h2>
               <form>
                 <div className="form-group my-4">
-                  <label htmlFor="email">Email</label>
+                  <label htmlFor="email">
+                    Email <span className="text-danger">*</span>
+                  </label>
                   <input
                     type="email"
                     className="form-control"
@@ -103,7 +105,9 @@ const Login = () => {
                   />
                 </div>
                 <div className="form-group my-4">
-                  <label htmlFor="password">Password</label>
+                  <label htmlFor="password">
+                    Password <span className="text-danger">*</span>
+                  </label>
                   <input
                     type="password"
                     className="form-control"

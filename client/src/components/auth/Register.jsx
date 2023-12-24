@@ -81,7 +81,9 @@ const Register = () => {
           <form>
             <div className="row mt-4">
               <div className="col-lg-6 form-group mb-4">
-                <label htmlFor="fname">First Name</label>
+                <label htmlFor="fname">
+                  First Name <span className="text-danger">*</span>
+                </label>
                 <input
                   type="text"
                   className="form-control"
@@ -93,7 +95,9 @@ const Register = () => {
                 />
               </div>
               <div className="col-lg-6 form-group mb-4">
-                <label htmlFor="lname">Last Name</label>
+                <label htmlFor="lname">
+                  Last Name <span className="text-danger">*</span>
+                </label>
                 <input
                   type="text"
                   className="form-control"
@@ -107,7 +111,9 @@ const Register = () => {
             </div>
 
             <div className="form-group">
-              <label htmlFor="email">Email</label>
+              <label htmlFor="email">
+                Email <span className="text-danger">*</span>
+              </label>
               <input
                 type="email"
                 className="form-control"
@@ -118,9 +124,11 @@ const Register = () => {
                 placeholder="Enter your email"
               />
             </div>
-            
+
             <div className="form-group my-4">
-              <label htmlFor="password">Password</label>
+              <label htmlFor="password">
+                Password <span className="text-danger">*</span>
+              </label>
               <input
                 type="password"
                 className="form-control"
@@ -132,7 +140,9 @@ const Register = () => {
               />
             </div>
             <div className="form-group my-4">
-              <label htmlFor="cpassword">Confirm Password</label>
+              <label htmlFor="cpassword">
+                Confirm Password <span className="text-danger">*</span>
+              </label>
               <input
                 type="password"
                 className="form-control"

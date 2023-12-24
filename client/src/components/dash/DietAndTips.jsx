@@ -1,6 +1,10 @@
-import React from "react";
+import React, { useContext } from "react";
+import { UserContext } from "../contextprovider/UserContext";
+import CircularLoading from "../reusable/CircularLoading";
 
 const DietAndTips = () => {
+  const { LoginStatus } = useContext(UserContext);
+  const { loggedIn, setLoggedIn } = LoginStatus;
   const dietPlan = [
     {
       meal: "Snack",
@@ -61,52 +65,60 @@ const DietAndTips = () => {
   ];
 
   return (
-    <div className="container">
-      <h2 className="text-center my-4 text-primary">Food Menu for You</h2>
-      <table className="table table-striped border">
-        <thead>
-          <tr>
-            <th>Meal</th>
-            <th>Food</th>
-          </tr>
-        </thead>
-        <tbody>
-          {dietPlan.map((item, index) => (
-            <>
-              {item.food.map((foodItem, foodIndex) => (
-                <tr key={`${index}.${foodIndex}`}>
-                  {foodIndex === 0 && (
-                    <td rowSpan={item.food.length}>{item.meal}</td>
-                  )}
-                  <td>{foodItem}</td>
-                </tr>
+    <>
+      {loggedIn ? (
+        <div className="container">
+          <h2 className="text-center my-4 text-primary">Food Menu for You</h2>
+          <table className="table table-striped border">
+            <thead>
+              <tr>
+                <th>Meal</th>
+                <th>Food</th>
+              </tr>
+            </thead>
+            <tbody>
+              {dietPlan.map((item, index) => (
+                <>
+                  {item.food.map((foodItem, foodIndex) => (
+                    <tr key={`${index}.${foodIndex}`}>
+                      {foodIndex === 0 && (
+                        <td rowSpan={item.food.length}>{item.meal}</td>
+                      )}
+                      <td>{foodItem}</td>
+                    </tr>
+                  ))}
+                </>
               ))}
-            </>
-          ))}
-        </tbody>
-      </table>
-      <div class="alert alert-info my-4" role="alert">
-        Maintain a balanced diet with diverse foods, stay hydrated, and limit
-        saturated fats, salt, and sugars. Opt for healthier fats when possible.
-        Keep indulgences minimal and aim for at least 30 minutes of moderate
-        exercise daily, like walking. Stay healthy!
-      </div>
-      <div className="card my-4">
-        <div className="card-header">
-          <h5 className="text-center text-primary">Some Tips To Stay Healthy</h5>
+            </tbody>
+          </table>
+          <div className="alert alert-info my-4" role="alert">
+            Maintain a balanced diet with diverse foods, stay hydrated, and
+            limit saturated fats, salt, and sugars. Opt for healthier fats when
+            possible. Keep indulgences minimal and aim for at least 30 minutes
+            of moderate exercise daily, like walking. Stay healthy!
+          </div>
+          <div className="card my-4">
+            <div className="card-header">
+              <h5 className="text-center text-primary">
+                Some Tips To Stay Healthy
+              </h5>
+            </div>
+            <div className="card-body">
+              <ul className="list-group list-group-flush">
+                {tips.map((tip, index) => (
+                  <li key={index} className="list-group-item">
+                    {tip}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
         </div>
-        <div className="card-body">
-          <ul className="list-group list-group-flush">
-            {tips.map((tip, index) => (
-              <li key={index} className="list-group-item">
-                {tip}
-              </li>
-            ))}
-          </ul>
-        </div>
-      </div>
-    </div>
+      ) : (
+        <CircularLoading />
+      )}
+    </>
   );
-}
+};
 
 export default DietAndTips;
